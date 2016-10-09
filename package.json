@@ -1,0 +1,30 @@
+{
+  "name": "jira-weekly-report",
+  "version": "0.0.1",
+  "description": "Command-line tool for generating Jira weekly reports.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/jira-node/node-jira-weekly-report"
+  },  
+  "bin": {
+    "jira-weekly-report": "./index.js"
+  },
+  "scripts": {
+    "start": "./index.js",
+    "test": "test"
+  },
+  "dependencies": {
+    "jira-client": "^3.0.4",
+    "nconf": "^0.8.4",
+    "handlebars": "^4.0.5",
+    "lodash": "^4.16.1"
+  },
+  "keywords": [
+    "jira",
+    "weekly",
+    "report"
+  ],
+  "author": "Alexander Andreev",
+  "license": "ISC"
+}

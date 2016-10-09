@@ -1,0 +1,10 @@
+{
+	"jira": {
+		"host":       "jira.somehost.net",
+		"username":   "username",
+		"password":   "password",
+		"protocol":   "https",
+		"apiVersion": "2",
+		"strictSSL":  true
+	}
+}
