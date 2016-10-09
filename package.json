@@ -5,14 +5,13 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "http://github.com/jira-node/node-jira-weekly-report"
+    "url": "https://github.com/casio1980/jira-weekly-report"
   },  
   "bin": {
     "jira-weekly-report": "./index.js"
   },
   "scripts": {
-    "start": "./index.js",
-    "test": "test"
+    "start": "./index.js"
   },
   "dependencies": {
     "jira-client": "^3.0.4",
@@ -26,5 +25,5 @@
     "report"
   ],
   "author": "Alexander Andreev",
-  "license": "ISC"
+  "license": "MIT"
 }
