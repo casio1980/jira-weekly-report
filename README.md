@@ -1,5 +1,5 @@
 # jira-weekly-report
-Command-line tool for generating Jira weekly reports. Written in Javascript and runs on NodeJs environment.
+Command-line tool for generating Jira weekly reports. Written in Javascript and runs in NodeJs environment.
 
 Reports have the following format:
 
