@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 const jiraClient = require('jira-client'),
-	    nconf      = require('nconf'),
-	    Handlebars = require('handlebars'),
-	    _          = require('lodash'),
-	    helpers    = require('./helpers');
+      nconf      = require('nconf'),
+      Handlebars = require('handlebars'),
+      _          = require('lodash'),
+      helpers    = require('./helpers');
 
 // Init config
 nconf
@@ -32,32 +32,32 @@ const config = nconf.get('jira'),
 // Search for issues
 client.searchJira('status changed by currentUser() during (startOfWeek(-1w), endOfWeek(-1w)) order by issuetype') // TODO { maxResults: 50 }
   .then(function(result) {
-  	var startAt    = result.startAt,
-	  	maxResults = result.maxResults,
-	  	total      = result.total,
-	  	output     = [];
+    var startAt    = result.startAt,
+      maxResults = result.maxResults,
+      total      = result.total,
+      output     = [];
 
-	var templateSubTask = Handlebars.compile("{{inc index}}. {{{reportSubTask issue.key issue.fields}}};"),
-		templateBug     = Handlebars.compile("{{inc index}}. {{{reportBug issue.key issue.fields}}};");
+  var templateSubTask = Handlebars.compile("{{inc index}}. {{{reportSubTask issue.key issue.fields}}};"),
+      templateBug     = Handlebars.compile("{{inc index}}. {{{reportBug issue.key issue.fields}}};");
 
-	// Iterate through the issues and create an output for each one
-  	_.each(result.issues, function(issue, i) {
-  		var context = {
-  			index: i,
-  			issue: issue
-  		};
+  // Iterate through the issues and create an output for each one
+    _.each(result.issues, function(issue, i) {
+      var context = {
+        index: i,
+        issue: issue
+      };
 
-  		if (issue.fields.issuetype.subtask) {
-  			// Sub-task
-  			output.push(templateSubTask(context));
-  		} else {
-  			// Bug
-  			output.push(templateBug(context));
-  		}
-  	});
+      if (issue.fields.issuetype.subtask) {
+        // Sub-task
+        output.push(templateSubTask(context));
+      } else {
+        // Bug
+        output.push(templateBug(context));
+      }
+    });
 
-  	// Print the output
-  	console.log(output.join("\n"));
+    // Print the output
+    console.log(output.join("\n"));
   })
   .catch(function(err) {
     console.error("ERROR:", err);
