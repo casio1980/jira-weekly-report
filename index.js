@@ -3,7 +3,6 @@
 const jiraClient = require('jira-client');
 const nconf = require('nconf');
 const Handlebars = require('handlebars');
-const _ = require('lodash');
 const helpers = require('./helpers');
 require("dotenv").config();
 
@@ -20,23 +19,25 @@ if (nconf.get('JIRA_PASSWORD')) nconf.set('jira:password', nconf.get('JIRA_PASSW
 const config = nconf.get('jira');
 const client = new jiraClient(config);
 
+const rapidView = 11040;
+const sprintId = 109066; // Sprint 115
+
 // Search for issues
-client.searchJira('status changed by currentUser() during (startOfWeek(-1w), endOfWeek(-1w)) order by issuetype') // TODO { maxResults: 50 }
-  .then(function(result) {
-    var startAt    = result.startAt,
-      maxResults = result.maxResults,
-      total      = result.total,
-      output     = [];
+(async function () {
+  try {
+    // const sprints = await client.getAllSprints(rapidView)
+    // const { id: sprintId } = sprints.values.find(s => s.name === 'Sprint 115')
 
-  var templateSubTask = Handlebars.compile("{{inc index}}. {{{reportSubTask issue.key issue.fields}}};"),
-      templateBug     = Handlebars.compile("{{inc index}}. {{{reportBug issue.key issue.fields}}};");
+    const result = await client.searchJira('status changed by currentUser() during (startOfWeek(-1w), endOfWeek(-1w)) order by issuetype');
+    const { issues, startAt, maxResults, total } = result;
+    const output = [];
 
-  // Iterate through the issues and create an output for each one
-    _.each(result.issues, function(issue, i) {
-      var context = {
-        index: i,
-        issue: issue
-      };
+    const templateSubTask = Handlebars.compile("{{inc index}}. {{{reportSubTask issue.key issue.fields}}};");
+    const templateBug = Handlebars.compile("{{inc index}}. {{{reportBug issue.key issue.fields}}};");
+  
+    // Iterate through the issues and create an output for each one
+    issues.forEach((issue, index) => {
+      const context = { issue, index };
 
       if (issue.fields.issuetype.subtask) {
         // Sub-task
@@ -49,7 +50,7 @@ client.searchJira('status changed by currentUser() during (startOfWeek(-1w), end
 
     // Print the output
     console.log(output.join("\n"));
-  })
-  .catch(function(err) {
+  } catch (err) {
     console.error("ERROR:", err);
-  });
+  }
+})();
