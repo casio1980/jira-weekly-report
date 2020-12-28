@@ -1,4 +1,5 @@
 # jira-weekly-report
+
 Command-line tool for generating Jira weekly reports. Written in Javascript and runs in NodeJs environment.
 
 Reports have the following format:
@@ -10,11 +11,10 @@ Reports have the following format:
 
 # Usage
 
-    host=jira.somehost.net ./index.js -u username -p password
-
-Or set Jira host, username and password in config.json and simply run
+Set Jira host, username and password in .env file and run
 
     npm start
 
 # License
+
 MIT

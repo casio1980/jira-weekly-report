@@ -1,33 +1,24 @@
 #!/usr/bin/env node
 
-const jiraClient = require('jira-client'),
-      nconf      = require('nconf'),
-      Handlebars = require('handlebars'),
-      _          = require('lodash'),
-      helpers    = require('./helpers');
+const jiraClient = require('jira-client');
+const nconf = require('nconf');
+const Handlebars = require('handlebars');
+const _ = require('lodash');
+const helpers = require('./helpers');
+require("dotenv").config();
 
 // Init config
 nconf
-  .argv({
-    "u": {
-      alias:    'username',
-      describe: 'Jira user name'
-    },
-    "p": {
-      alias:    'password',
-      describe: 'Jira user password'
-    }
-  })
+  .file('config.json')
   .env()
-  .file('config.json');
 
-if (nconf.get('host')) nconf.set('jira:host', nconf.get('host'));
-if (nconf.get('username')) nconf.set('jira:username', nconf.get('username'));
-if (nconf.get('password')) nconf.set('jira:password', nconf.get('password'));
+if (nconf.get('JIRA_HOST')) nconf.set('jira:host', nconf.get('JIRA_HOST'));
+if (nconf.get('JIRA_USER')) nconf.set('jira:username', nconf.get('JIRA_USER'));
+if (nconf.get('JIRA_PASSWORD')) nconf.set('jira:password', nconf.get('JIRA_PASSWORD'));
 
 // Init Jira client
-const config = nconf.get('jira'),
-      client = new jiraClient(config);
+const config = nconf.get('jira');
+const client = new jiraClient(config);
 
 // Search for issues
 client.searchJira('status changed by currentUser() during (startOfWeek(-1w), endOfWeek(-1w)) order by issuetype') // TODO { maxResults: 50 }
