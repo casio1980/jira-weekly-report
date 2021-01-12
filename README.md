@@ -11,7 +11,7 @@ Reports have the following format:
 
 # Usage
 
-Set Jira host, username and password in .env file and run
+Define Jira/GitLab hosts and credentials in .env file and run
 
     npm start
 
