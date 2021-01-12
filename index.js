@@ -48,8 +48,8 @@ const lastReportDate = '2020-12-08';
     const stories = [];
     const bugs = [];
 
-    const templateStory = Handlebars.compile("• {{{reportStory issue.key issue.fields}}};");
-    const templateBug = Handlebars.compile("• {{{reportBug issue.key issue.fields}}};");
+    const templateStory = Handlebars.compile("• {{{reportStory issue.key issue.fields}}}");
+    const templateBug = Handlebars.compile("• {{{reportBug issue.key issue.fields}}}");
   
     // Iterate through the issues and create an output for each one
     issues.forEach((issue, index) => {
@@ -70,8 +70,8 @@ const lastReportDate = '2020-12-08';
 
     const other = [];
 
-    const templateMergeRequest = Handlebars.compile("• {{{reportMergeRequest mergeRequest}}};");
-    const templatePromotion = Handlebars.compile("• {{{reportPromotion mergeRequest}}};");
+    const templateMergeRequest = Handlebars.compile("• {{{reportMergeRequest mergeRequest}}}");
+    const templatePromotion = Handlebars.compile("• {{{reportPromotion mergeRequest}}}");
 
     mergeRequests.forEach((mergeRequest) => {
       if (mergeRequest.project_id === gitProjectId) {
