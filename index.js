@@ -34,7 +34,7 @@ const gitUserId = 17795;
 const gitProjectId = 29679;
 const gitBuildProjectId = 52161;
 
-const lastReportDate = '2020-12-08';
+const lastReportDate = '2021-01-12';
 
 // Search for issues
 (async function () {
@@ -91,6 +91,6 @@ const lastReportDate = '2020-12-08';
     console.log("\nOther:");
     console.log(other.join("\n"));
   } catch (err) {
-    console.error("ERROR:", err);
+    console.error("ERROR:", err.message.substring(0, 200));
   }
 })();
