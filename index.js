@@ -27,7 +27,7 @@ const jira = new jiraClient(config);
 // });
 
 // REPORTING DATE
-const lastReportDate = "2023-12-01";
+const lastReportDate = "2024-05-17";
 
 // Search for issues
 (async function () {
@@ -62,7 +62,10 @@ const lastReportDate = "2023-12-01";
 
       if (issue.fields.issuetype.name === "Story") {
         stories.push(templateStory(context)); // TODO Delete?
-      } else if (issue.fields.issuetype.name === "Sub-task") {
+      } else if (
+        issue.fields.issuetype.name === "Task" ||
+        issue.fields.issuetype.name === "Sub-task"
+      ) {
         tasks.push(templateStory(context));
       } else if (issue.fields.issuetype.name === "Bug") {
         bugs.push(templateBug(context));
