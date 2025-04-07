@@ -27,7 +27,7 @@ const jira = new jiraClient(config);
 // });
 
 // REPORTING DATE
-const lastReportDate = "2024-05-17";
+const lastReportDate = "2025-03-07";
 
 // Search for issues
 (async function () {
@@ -53,8 +53,6 @@ const lastReportDate = "2024-05-17";
     const templatePullRequest = Handlebars.compile(
       "{{{reportPullRequest pullRequest}}};"
     );
-
-    const issuesKeys = issues.map((issue) => issue.key);
 
     // Iterate through the issues and create an output for each one
     issues.forEach((issue, index) => {
@@ -95,16 +93,14 @@ const lastReportDate = "2024-05-17";
       const { updatedDate } = pullRequest;
 
       if (new Date(updatedDate) >= new Date(lastReportDate)) {
-        // check that at least one key from isses array is contained by the pull request title
-        const found = issuesKeys.some((key) => pullRequest.title.includes(key));
-        if (found) return;
+        // remove pull requests that are already counted in Jira section
+        const counted = issues.some((issue) => pullRequest.fromRef.displayId.includes(issue.key));
+        if (counted) return;
 
         other.push(templatePullRequest({ pullRequest }));
       }
     });
     console.log(`Found ${other.length} records`);
-
-    console.log(pullRequests[1]);
 
     /*
     console.log("Searching GitLab...");
