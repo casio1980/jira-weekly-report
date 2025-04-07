@@ -51,12 +51,15 @@ Handlebars.registerHelper("reportBug", function (key, fields) {
 });
 
 Handlebars.registerHelper("reportPullRequest", function (pullRequest) {
-  const { id, title, state, fromRef, updatedDate } = pullRequest;
-  const { repository } = fromRef;
-  const { slug, project } = repository;
-  const link = `${nconf.get("ORGANIZR_HOST")}/projects/${project.key}/repos/${slug}/pull-requests/${id}`;
+  const state = pullRequest.state;
+  const updated = new Date(pullRequest.updatedDate).toLocaleDateString('en-GB');
+  const link = `[${pullRequest.id}](${nconf.get("ORGANIZR_HOST")}/projects/${pullRequest.fromRef.repository.project.key}/repos/${pullRequest.fromRef.repository.slug}/pull-requests/${pullRequest.id})`;
 
-  return `${state} [PR${id}](${link}): ${title} (updated ${new Date(updatedDate).toLocaleDateString('en-GB')})`;
+  let ret = `${state} `;
+  ret += `PR ${link}: "${pullRequest.title}" `;
+  ret += `(updated ${updated})`;
+
+  return ret;
 });
 
 Handlebars.registerHelper("reportPromotion", function (mergeRequest) {
